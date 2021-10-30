@@ -1,0 +1,4 @@
+{
+	"diagnostic.checkCurrentLine": true,
+	"coc.preferences.jumpCommand": "tab drop"
+}
