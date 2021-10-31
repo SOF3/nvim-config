@@ -154,6 +154,10 @@ nmap <silent> Kr <Plug>(coc-format-selected)
 " I almost never use H, M and L anyway.
 " I use vim because behaviour is predictable.
 " H, M and L are not predictable, especially when we have `set rnu`.
+
+" Clear search
+nnoremap H :nohls<CR>
+" Open documentation
 nnoremap M :call CocAction('doHover')<CR>
 
 " Happy Chinese New Year! ^C^N^Y
