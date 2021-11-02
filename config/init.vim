@@ -174,3 +174,6 @@ au BufRead,BufNewFile *.json.dist setfiletype json
 au BufRead,BufNewFile *.rs set fdm=syntax foldlevel=0
 au BufRead,BufNewFile *.yml set fdm=indent foldlevel=1
 au BufRead,BufNewFile *.py set foldlevel=0
+
+" Who thought it's a good idea to conceal unused symbols?
+highlight CocFadeout ctermfg=248
