@@ -70,6 +70,9 @@ let g:indentLine_setConceal = 0
 
 let g:tex_flavor = 'latex'
 
+" This gets accidentally triggered too often...
+let g:AutoPairsShortcutToggle = ''
+
 " Autosave after 0.3s
 set updatetime=300
 autocmd CursorHold,CursorHoldI * update
@@ -107,7 +110,7 @@ vnoremap <> c<lt>><ESC>P
 " Copy yanked text to X11 primary selection (middle click).
 command Y :call system('xclip -i', @@)
 " Copy yanked text to X11 clipboard selection (^V).
-command YY :call system('xclip -i', @@)
+command YY :call system('xclip -i -selection clipboard', @@)
 
 " Change %% to current dir when typing commands.
 cabbr <expr> %% expand('%:p:h')
