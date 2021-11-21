@@ -72,6 +72,22 @@ let g:tex_flavor = 'latex'
 
 " This gets accidentally triggered too often...
 let g:AutoPairsShortcutToggle = ''
+" I hate being unable to type } just because the next line has one
+let g:AutoPairsMultilineClose = 0
+" Do not autopair ''.
+" It is usually only used for single characters,
+" and it should not be paired in Rust lifetimes or in English contractions
+" (e.g. "it's")
+let g:AutoPairs = {
+			\'(':')',
+			\'[':']',
+			\'{':'}',
+			\'"':'"',
+			\"`":"`",
+			\'```':'```',
+			\'"""':'"""',
+			\"'''":"'''"
+			\}
 
 " Autosave after 0.3s
 set updatetime=300
