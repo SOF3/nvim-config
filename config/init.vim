@@ -8,6 +8,7 @@ set mouse= " disable mouse integration. I want to copy words with my mouse direc
 set wildmode=list:longest,longest:full " command line completion
 
 set hidden " I'm not sure what this does, but it looks legit.
+set startofline " Why does neovim change these defaults? Who wants to go to a random position in the line after `gg` or `G`?
 
 set statusline=%f               " filename relative to current $PWD
 set statusline+=%h              " help file flag
@@ -21,7 +22,11 @@ set statusline+=\ %P            " Position in buffer: Percentage
 
 set autoread " reload external changes after running commands
 
-set background=dark " only apple thinks it's a good idea to code on a white background.
+if system('date +%H') >= 7 && system('date +%H') <= 19
+  set background=light
+else
+  set background=dark
+endif
 
 
 autocmd BufReadPost *
@@ -45,6 +50,7 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'preservim/nerdtree'
 Plugin 'haya14busa/incsearch.vim'
@@ -192,7 +198,13 @@ au BufRead,BufNewFile .eslintrc setfiletype json
 au BufRead,BufNewFile *.json.dist setfiletype json
 au BufRead,BufNewFile *.rs set fdm=syntax foldlevel=0
 au BufRead,BufNewFile *.yml set fdm=indent foldlevel=1
+au BufRead,BufNewFile *.php set fdm=indent foldlevel=1
 au BufRead,BufNewFile *.py set foldlevel=0
+
+" I don't do HTML in PHP.
+" Let's disable the matcher so that we have `%` working properly.
+" https://stackoverflow.com/a/24242461/3990767
+au BufWinEnter *.php set mps-=<:>
 
 " Who thought it's a good idea to conceal unused symbols?
 highlight CocFadeout ctermfg=248
