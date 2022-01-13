@@ -22,7 +22,7 @@ set statusline+=\ %P            " Position in buffer: Percentage
 
 set autoread " reload external changes after running commands
 
-if system('date +%H') >= 7 && system('date +%H') <= 19
+if system('TZ=Asia/Singapore date +%H') >= 7 && system('TZ=Asia/Singapore date +%H') <= 19
   set background=light
 else
   set background=dark
