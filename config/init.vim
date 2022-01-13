@@ -76,8 +76,12 @@ let g:indentLine_setConceal = 0
 
 let g:tex_flavor = 'latex'
 
-" This gets accidentally triggered too often...
+" This keeps messing up my text if I type too fast...
 let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsShortcutFastWrap = ''
+let g:AutoPairsShortcutJump = ''
+let g:AutoPairsShortcutBackInsert = ''
+
 " I hate being unable to type } just because the next line has one
 let g:AutoPairsMultilineClose = 0
 " Do not autopair ''.
