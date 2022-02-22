@@ -56,6 +56,13 @@ Plugin 'preservim/nerdtree'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 
+" Telescope
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'nvim-telescope/telescope-fzf-native.nvim'
+Plugin 'fannheyward/telescope-coc.nvim'
+Plugin 'nvim-treesitter/nvim-treesitter'
+
 " Cosmetic
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -98,6 +105,8 @@ let g:AutoPairs = {
 			\'"""':'"""',
 			\"'''":"'''"
 			\}
+
+lua require('telescope').load_extension('coc')
 
 " Autosave after 0.3s
 set updatetime=300
@@ -180,6 +189,13 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> Kn <Plug>(coc-rename)
 nmap <silent> Kr <Plug>(coc-format-selected)
 
+" zf = fuzzy file search!
+nmap <silent> zf <cmd>Telescope git_files<cr>
+" fuzzy symbol search
+nmap <silent> zs <cmd>Telescope coc workspace_symbols<cr>
+" fuzzy grep search
+nmap <silent> zg <cmd>Telescope grep_string<cr>
+
 " I almost never use H, M and L anyway.
 " I use vim because behaviour is predictable.
 " H, M and L are not predictable, especially when we have `set rnu`.
@@ -191,6 +207,10 @@ nnoremap M :call CocAction('doHover')<CR>
 
 " Happy Chinese New Year! ^C^N^Y
 inoremap <silent><expr> <c-c> coc#refresh()
+
+" I want tabs.
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
 " Some uncommon file extensions I have dealt with.
 " set filetype=xxx overrides the filetype
@@ -212,3 +232,5 @@ au BufWinEnter *.php set mps-=<:>
 
 " Who thought it's a good idea to conceal unused symbols?
 highlight CocFadeout ctermfg=248
+" The default color is almost unreadable to me.
+highlight FgCocErrorFloatBgCocFloating ctermfg=9 ctermbg=10
