@@ -44,7 +44,10 @@ call vundle#begin()
 
 " System
 Plugin 'VundleVim/Vundle.vim'
+
+" Language
 Plugin 'neoclide/coc.nvim'
+Plugin 'mfussenegger/nvim-dap'
 
 " Behaviour
 Plugin 'editorconfig/editorconfig-vim'
@@ -146,6 +149,8 @@ vnoremap <> c<lt>><ESC>P
 command Y :call system('xclip -i', @@)
 " Copy yanked text to X11 clipboard selection (^V).
 command YY :call system('xclip -i -selection clipboard', @@)
+" Copy yanked text to /tmp/vim-yank
+command YT :call system('cat > /tmp/vim-yank', @@)
 
 " Change %% to current dir when typing commands.
 cabbr <expr> %% expand('%:p:h')
