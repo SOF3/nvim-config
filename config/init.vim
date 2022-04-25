@@ -115,7 +115,7 @@ lua require('telescope').load_extension('coc')
 
 " Autosave after 0.3s
 set updatetime=300
-autocmd CursorHold,CursorHoldI * update
+autocmd CursorHold,CursorHoldI *.* update
 
 " Configure the behavior of ^N
 set completeopt=longest,menuone
@@ -222,20 +222,26 @@ let g:copilot_no_tab_map = v:true
 " Some uncommon file extensions I have dealt with.
 " set filetype=xxx overrides the filetype
 " setfiletype xxx provides default filetype
-au BufRead,BufNewFile *.tex set filetype=tex
-au BufRead,BufNewFile *.rviz set filetype=yaml
-au BufRead,BufNewFile *.launch setfiletype xml
-au BufRead,BufNewFile .eslintrc setfiletype json
-au BufRead,BufNewFile *.json.dist setfiletype json
-au BufRead,BufNewFile *.rs set fdm=syntax foldlevel=0
-au BufRead,BufNewFile *.yml set fdm=indent foldlevel=1
-au BufRead,BufNewFile *.php set fdm=indent foldlevel=1
-au BufRead,BufNewFile *.py set foldlevel=0
+autocmd BufRead,BufNewFile *.tex set filetype=tex
+autocmd BufRead,BufNewFile *.rviz set filetype=yaml
+autocmd BufRead,BufNewFile *.launch setfiletype xml
+autocmd BufRead,BufNewFile .eslintrc setfiletype json
+autocmd BufRead,BufNewFile *.json.dist setfiletype json
+autocmd BufRead,BufNewFile *.rs set fdm=syntax foldlevel=0
+autocmd BufRead,BufNewFile *.yml set fdm=indent foldlevel=1
+autocmd BufRead,BufNewFile *.php set fdm=indent foldlevel=1
+autocmd BufRead,BufNewFile *.py set foldlevel=0
+
+" Disallow file writing when viewing source of a cloned package
+autocmd BufRead *.go set modifiable
+autocmd BufRead */pkg/mod/*.go set nomodifiable
+autocmd BufRead *.rs set modifiable
+autocmd BufRead */.cargo/registry/src/*.rs set nomodifiable
 
 " I don't do HTML in PHP.
 " Let's disable the matcher so that we have `%` working properly.
 " https://stackoverflow.com/a/24242461/3990767
-au BufWinEnter *.php set mps-=<:>
+autocmd BufWinEnter *.php set mps-=<:>
 
 " Who thought it's a good idea to conceal unused symbols?
 highlight CocFadeout ctermfg=248
