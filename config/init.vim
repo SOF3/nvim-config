@@ -115,7 +115,7 @@ lua require('telescope').load_extension('coc')
 
 " Autosave after 0.3s
 set updatetime=300
-autocmd CursorHold,CursorHoldI *.* update
+autocmd CursorHold,CursorHoldI ?* update
 
 " Configure the behavior of ^N
 set completeopt=longest,menuone
