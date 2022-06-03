@@ -259,3 +259,5 @@ augroup END
 
 " Default git blame color should disambiguate from normal code.
 let g:gitblame_highlight_group = "Ignore"
+let g:gitblame_message_template = '<sha> <date> <author> | <summary>'
+let g:gitblame_date_format = '%r'
