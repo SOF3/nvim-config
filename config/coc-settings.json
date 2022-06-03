@@ -3,5 +3,6 @@
 	"coc.preferences.jumpCommand": "tab drop",
 	"go.goplsEnv": {
 		"GOFLAGS": "-tags=integration"
-	}
+	},
+	"rust-analyzer.inlayHints.typeHints": true
 }

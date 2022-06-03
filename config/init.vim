@@ -24,7 +24,7 @@ set autoread " reload external changes after running commands
 
 set maxmempattern=10000
 
-if system('TZ=Asia/Singapore date +%H') >= 7 && system('TZ=Asia/Singapore date +%H') <= 19
+if system('TZ=Asia/Singapore date +%H') >= 7 && system('TZ=Asia/Singapore date +%H') < 19
   set background=light
 else
   set background=dark
@@ -60,6 +60,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'preservim/nerdtree'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'tpope/vim-eunuch'
 
 " Telescope
 Plugin 'nvim-lua/plenary.nvim'
