@@ -256,3 +256,6 @@ augroup remember_folds
   autocmd BufWinLeave * mkview
   autocmd BufWinEnter * silent! loadview
 augroup END
+
+" Default git blame color should disambiguate from normal code.
+let g:gitblame_highlight_group = "Ignore"
