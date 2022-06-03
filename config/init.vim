@@ -73,6 +73,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'enricobacis/vim-airline-clock'
 Plugin 'Yggdroot/indentLine'
+Plugin 'f-person/git-blame.nvim'
 
 call vundle#end()
 filetype plugin indent on
@@ -247,3 +248,10 @@ autocmd BufWinEnter *.php set mps-=<:>
 highlight CocFadeout ctermfg=248
 " The default color is almost unreadable to me.
 highlight FgCocErrorFloatBgCocFloating ctermfg=9 ctermbg=10
+
+" Do not reset folds on reload
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
