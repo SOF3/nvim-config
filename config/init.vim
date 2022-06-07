@@ -24,12 +24,7 @@ set autoread " reload external changes after running commands
 
 set maxmempattern=10000
 
-if system('TZ=Asia/Singapore date +%H') >= 7 && system('TZ=Asia/Singapore date +%H') < 19
-  set background=light
-else
-  set background=dark
-endif
-
+set background=dark
 
 autocmd BufReadPost *
 	\ if line("'\"") > 0 && line("'\"") <= line("$")
@@ -81,7 +76,7 @@ filetype plugin indent on
 
 " Airline setup
 let g:airline_powerline_fonts = v:true
-let g:airline_theme='luna'
+let g:airline_theme='dark'
 let g:airline#extensions#clock#format = '%H:%M:%S'
 let g:airline#extensions#clock#updatetime = 1000
 
