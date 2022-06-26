@@ -76,7 +76,7 @@ filetype plugin indent on
 
 " Airline setup
 let g:airline_powerline_fonts = v:true
-let g:airline_theme='dark'
+let g:airline_theme='ravenpower'
 let g:airline#extensions#clock#format = '%H:%M:%S'
 let g:airline#extensions#clock#updatetime = 1000
 
@@ -248,8 +248,8 @@ highlight FgCocErrorFloatBgCocFloating ctermfg=9 ctermbg=10
 " Do not reset folds on reload
 augroup remember_folds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  autocmd BufWinLeave ?* mkview
+  autocmd BufWinEnter ?* silent! loadview
 augroup END
 
 " Default git blame color should disambiguate from normal code.
