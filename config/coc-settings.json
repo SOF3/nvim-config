@@ -4,5 +4,6 @@
 	"go.goplsEnv": {
 		"GOFLAGS": "-tags=integration"
 	},
+	"rust-analyzer.inlayHints.enable": true,
 	"rust-analyzer.inlayHints.typeHints": true
 }

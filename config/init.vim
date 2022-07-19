@@ -188,10 +188,20 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> g] <Plug>(coc-diagnostic-next)
+nmap <silent> g{ <Plug>(coc-diagnostic-prev-error)
+nmap <silent> g} <Plug>(coc-diagnostic-next-error)
 
-" Who uses `K` anyway?
+" Who uses `K` and `L` anyway?
 nmap <silent> Kn <Plug>(coc-rename)
-nmap <silent> Kr <Plug>(coc-format-selected)
+nmap <silent> Kf <Plug>(coc-format-selected)
+nmap <silent> Kx <Plug>(coc-fix-current)
+nmap <silent> Kr <Plug>(coc-refactor)
+
+nmap <silent> Kl <Plug>(coc-codeaction)
+nmap <silent> L <Plug>(coc-codeaction-line)
+nmap <silent> KL <Plug>(coc-codeaction-selected)
 
 " zf = fuzzy file search!
 nmap <silent> zf <cmd>Telescope git_files<cr>
