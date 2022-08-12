@@ -204,11 +204,11 @@ nmap <silent> L <Plug>(coc-codeaction-line)
 nmap <silent> KL <Plug>(coc-codeaction-selected)
 
 " zf = fuzzy file search!
-nmap <silent> zf <cmd>Telescope git_files<cr>
+nmap <silent> zf :set modifiable<CR><cmd>Telescope git_files<cr>
 " fuzzy symbol search
-nmap <silent> zs <cmd>Telescope coc workspace_symbols<cr>
+nmap <silent> zs :set modifiable<CR><cmd>Telescope coc workspace_symbols<cr>
 " fuzzy grep search
-nmap <silent> zg <cmd>Telescope grep_string<cr>
+nmap <silent> zg :set modifiable<CR><cmd>Telescope grep_string<cr>
 
 " I almost never use H, M and L anyway.
 " I use vim because behaviour is predictable.
@@ -254,6 +254,8 @@ autocmd BufWinEnter *.php set mps-=<:>
 highlight CocFadeout ctermfg=248
 " The default color is almost unreadable to me.
 highlight FgCocErrorFloatBgCocFloating ctermfg=9 ctermbg=10
+" I don't want to think twice to know whether I should `k` or `j`.
+highlight link LineNrAbove Tag
 
 " Do not reset folds on reload
 augroup remember_folds
