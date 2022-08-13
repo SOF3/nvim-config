@@ -201,7 +201,7 @@ nmap <silent> Kr <Plug>(coc-refactor)
 
 nmap <silent> Kl <Plug>(coc-codeaction)
 nmap <silent> L <Plug>(coc-codeaction-line)
-nmap <silent> KL <Plug>(coc-codeaction-selected)
+vmap <silent> L <Plug>(coc-codeaction-selected)
 
 " zf = fuzzy file search!
 nmap <silent> zf :set modifiable<CR><cmd>Telescope git_files<cr>
