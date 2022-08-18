@@ -256,6 +256,8 @@ highlight CocFadeout ctermfg=248
 highlight FgCocErrorFloatBgCocFloating ctermfg=9 ctermbg=10
 " I don't want to think twice to know whether I should `k` or `j`.
 highlight link LineNrAbove Tag
+" Constant color conflicts with Pmenu
+highlight Constant ctermfg=10
 
 " Do not reset folds on reload
 augroup remember_folds
