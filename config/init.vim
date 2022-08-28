@@ -20,19 +20,11 @@ set statusline+=%=              " Rest: right align
 set statusline+=%l,%c%V         " Position in buffer: linenumber, column, virtual column
 set statusline+=\ %P            " Position in buffer: Percentage
 
-set autoread " reload external changes after running commands
+set autoread autowrite " reload external changes after running commands
 
 set maxmempattern=10000
 
 set background=dark
-
-autocmd BufReadPost *
-	\ if line("'\"") > 0 && line("'\"") <= line("$")
-	\           && expand("%") !~ "COMMIT_EDITMSG"
-	\           && expand("%") !~ "ADD_EDIT.patch"
-	\           && expand("%") !~ "addp-hunk-edit.diff" |
-	\   exe "normal g`\"" |
-	\ endif
 
 " Plugins
 filetype off
@@ -264,7 +256,14 @@ augroup remember_folds
   autocmd!
   autocmd BufWinLeave ?* mkview
   autocmd BufWinEnter ?* silent! loadview
+  autocmd BufWrite ?* mkview
 augroup END
+
+command! E :call ReloadWithoutResettingFolds()
+function ReloadWithoutResettingFolds()
+	mkview
+	edit
+endfunction
 
 " Default git blame color should disambiguate from normal code.
 let g:gitblame_highlight_group = "Ignore"
