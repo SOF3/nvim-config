@@ -251,6 +251,7 @@ highlight link LineNrAbove Tag
 " Constant color conflicts with Pmenu
 highlight Constant ctermfg=132
 highlight CocMenuSel ctermbg=94
+highlight FgCocHintFloatBgCocFloating ctermbg=91
 
 " Do not reset folds on reload
 augroup remember_folds
