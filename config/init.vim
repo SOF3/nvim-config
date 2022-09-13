@@ -209,7 +209,7 @@ nmap <silent> zg :set modifiable<CR><cmd>Telescope grep_string<cr>
 " Clear search
 nnoremap H :nohls<CR>
 " Open documentation
-nnoremap M :call CocAction('doHover')<CR>
+nnoremap M :call CocActionAsync('doHover')<CR>
 
 " Happy Chinese New Year! ^C^N^Y
 inoremap <silent><expr> <c-c> coc#refresh()
