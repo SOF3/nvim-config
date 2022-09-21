@@ -3,6 +3,7 @@ __BASHRC_START=$(date +%s%N)
 set -o vi
 
 export PATH=$HOME/go/bin:$HOME/.local/bin:$HOME/sys/bin:$PATH
+export MANPATH=~/.local/share/man/:$MANPATH
 
 . "$HOME/.cargo/env"
 
