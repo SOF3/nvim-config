@@ -114,8 +114,8 @@ function go-mod-pkg {
 function git-fmt {
 	against=${1:-HEAD}
 	cd $(git-root)
-	git diff $against --name-only | xargs gofmt -w
-	git diff $against --name-only | xargs goimports -local $(go-mod-pkg)/ -w
+	git diff $against --name-only | grep -P '\.go$' | xargs gofmt -w
+	git diff $against --name-only | grep -P '\.go$' | xargs goimports -local $(go-mod-pkg)/ -w
 }
 
 if command -v kubectl >/dev/null; then
