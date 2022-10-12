@@ -9,6 +9,7 @@ export MANPATH=~/.local/share/man/:$MANPATH
 
 export HISTSIZE=
 export HISTFILESIZE=
+export HISTCONTROL=ignoredups
 
 eval $(lesspipe)
 
@@ -20,7 +21,7 @@ alias cp='cp -i'
 alias ta='tmux a -t'
 alias clear='env clear && env clear'
 
-alias myps='ps -A --forest -o user,pid,ppid,stime,tty,time,%cpu,%pem,rss,start,time,comm'
+alias myps='ps -A --forest -o user,pid,ppid,stime,tty,time,%cpu,%mem,rss,start,time,comm'
 function p {
 	if [[ $# -eq 0 ]]; then
 		myps
@@ -71,7 +72,7 @@ function get-ext {
 	echo $extension
 }
 
-PS1='\[\033]0;$TITLEPREFIX:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[0m\]\[\033[34m\]\[\033[32m\]\[\033[35m\]$(LAST_EXIT_CODE=$? && test $LAST_EXIT_CODE -gt 0 && echo \[\033[33m\]"Exit code: $LAST_EXIT_CODE | ")\[\033[0m\]\[\033[31m\]$(echo $__COMMAND_LAST_DURATION )ms $(date +%H:%M:%S --date=@$((__COMMAND_START_TIME / 1000)))..$(date +%H:%M:%S) | \[\033[91m\]\H @ \[\033[32m\]\w\[\033[36m\]$(__git_ps1)\[\033[0m\]\n$ '
+PS1='\[\033]0;$TITLEPREFIX:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[0m\]\[\033[34m\]\[\033[32m\]\[\033[35m\]$(LAST_EXIT_CODE=$? && test $LAST_EXIT_CODE -gt 0 && echo \[\033[33m\]"Exit code: $LAST_EXIT_CODE | ")\[\033[0m\]\[\033[31m\]$(echo $__COMMAND_LAST_DURATION )ms $(date +%H:%M:%S --date=@$((__COMMAND_START_TIME / 1000)))..$(date +%H:%M:%S) | \[\033[91m\]\H @ \[\033[32m\]\w\[\033[36m\]$(__git_ps1)\[\033[95m\]$(kcm ps1 --prefix " " --suffix "")\[\033[0m\]\n$ '
 trap '{
 	if [ "$__DEBUG_TRAP_ONCE" == true ]; then
 		__COMMAND_START_TIME=$(($(date +%s%N) / 1000000));
@@ -98,9 +99,13 @@ __COMMAND_START_TIME=$(($(date +%s%N) / 1000000));
 
 BASHRC_RELOAD_FILES=$HOME/.bashrc
 
+function push_bashrc_reload_file {
+	BASHRC_RELOAD_FILES="$BASHRC_RELOAD_FILES $1"
+	source $1
+}
+
 if [[ -f $HOME/local.bashrc ]]; then
-	BASHRC_RELOAD_FILES="$BASHRC_RELOAD_FILES $HOME/local.bashrc"
-	source $HOME/local.bashrc
+	push_bashrc_reload_file $HOME/local.bashrc
 fi
 
 __BASHRC_CKSUM=$(cksum $BASHRC_RELOAD_FILES)
@@ -114,8 +119,8 @@ function go-mod-pkg {
 function git-fmt {
 	against=${1:-HEAD}
 	cd $(git-root)
-	git diff $against --name-only | grep -P '\.go$' | xargs gofmt -w
-	git diff $against --name-only | grep -P '\.go$' | xargs goimports -local $(go-mod-pkg)/ -w
+	git diff $against --name-only | grep -P '\.go$' | xargs -d '\n' ls -1df 2>/dev/null | xargs gofmt -w
+	git diff $against --name-only | grep -P '\.go$' | xargs -d '\n' ls -1df 2>/dev/null | xargs goimports -local $(go-mod-pkg)/ -w
 }
 
 if command -v kubectl >/dev/null; then
@@ -126,6 +131,7 @@ function loop {
 	while true; do
 		echo "$@"
 		eval "$@"
+		sleep 1
 	done
 }
 
@@ -136,6 +142,7 @@ function retry {
 		if [[ $? -eq 0 ]]; then
 			break
 		fi
+		sleep 1
 	done
 }
 
