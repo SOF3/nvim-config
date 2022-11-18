@@ -211,6 +211,9 @@ nnoremap H :nohls<CR>
 " Open documentation
 nnoremap M :call CocActionAsync('doHover')<CR>
 
+" I have autosave anyway
+nnoremap ZZ :NERDTreeFind<CR>
+
 " Happy Chinese New Year! ^C^N^Y
 inoremap <silent><expr> <c-c> coc#refresh()
 
