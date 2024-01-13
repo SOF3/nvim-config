@@ -10,10 +10,8 @@ set -o vi
 
 shopt -s globstar
 
-export PATH=$HOME/go/bin:$HOME/.local/bin:$HOME/sys/bin:$PATH
+export PATH=$(echo $HOME/.asdf/installs/golang/*/packages/bin/ | tr " " ,):$HOME/go/bin:$HOME/.local/bin:$HOME/sys/bin:$PATH
 export MANPATH=~/.local/share/man/:$MANPATH
-
-. "$HOME/.cargo/env"
 
 export HISTSIZE=
 export HISTFILESIZE=

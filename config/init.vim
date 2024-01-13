@@ -48,6 +48,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'tpope/vim-eunuch'
+Plugin 'salsifis/vim-transpose'
 
 " Telescope
 Plugin 'nvim-lua/plenary.nvim'
