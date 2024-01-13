@@ -155,7 +155,6 @@ if [ ! -v PS1_SUFFIX ]; then
 	declare -A PS1_SUFFIX
 fi
 PS1_SUFFIX["git"]='\[\033[36m\]$(__git_ps1)'
-# PS1_SUFFIX["kcm"]='\[\033[95m\]$(kcm ps1 --prefix " " --suffix "")'
 
 PS1="${PS1_PART_TITLE}\\n"
 for __next_ps1_part in "${PS1_PREFIX[@]}"; do
