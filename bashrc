@@ -154,6 +154,7 @@ PS1_PREFIX["exitCode"]='\[\033[0m\]\[\033[34m\]\[\033[32m\]\[\033[35m\]$(LAST_EX
 if [ ! -v PS1_SUFFIX ]; then
 	declare -A PS1_SUFFIX
 fi
+export GIT_PS1_SHOWCOLORHINTS=1 GIT_PS1_SHOWDIRTYSTATE=1
 PS1_SUFFIX["git"]='\[\033[36m\]$(__git_ps1)'
 
 PS1="${PS1_PART_TITLE}\\n"
