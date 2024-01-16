@@ -120,6 +120,38 @@ if [[ $__HAS_ADDED_PROMPT != 1 ]]; then
 fi
 __COMMAND_START_TIME=$(($(date +%s%N) / 1000000));
 
+unset PS1_PREFIX PS1_PREFIX_KEYS PS1_SUFFIX PS1_SUFFIX_KEYS
+declare -Ai PS1_PREFIX_KEYS PS1_SUFFIX_KEYS
+declare -a PS1_PREFIX PS1_SUFFIX
+
+function add_ps1_prefix {
+	local key="$1"
+	local value="$2"
+
+	local index
+	if [[ -v "PS1_PREFIX_KEYS[${key}]" ]]; then
+		index=${PS1_PREFIX_KEYS[${key}]}
+	else
+		index=${#PS1_PREFIX[@]}
+		PS1_PREFIX_KEYS[${key}]=$index
+		PS1_PREFIX+="${value}"
+	fi
+}
+
+function add_ps1_suffix {
+	local key="$1"
+	local value="$2"
+
+	local index
+	if [[ -v "PS1_SUFFIX_KEYS[${key}]" ]]; then
+		index=${PS1_SUFFIX_KEYS[${key}]}
+	else
+		index=${#PS1_SUFFIX[@]}
+		PS1_SUFFIX_KEYS[${key}]=$index
+		PS1_SUFFIX+="${value}"
+	fi
+}
+
 BASHRC_RELOAD_FILES=$HOME/.bashrc
 
 function push_bashrc_reload_file {
@@ -137,25 +169,18 @@ if [ ! -v PS1_PART_TITLE ]; then
 	PS1_PART_TITLE='\[\033]0;$TITLEPREFIX:${PWD//[^[:ascii:]]/?}\007\]'
 fi
 
-if [ ! -v PS1_PREFIX ]; then
-	declare -A PS1_PREFIX
-fi
-
-PS1_PREFIX["execTime"]='\[\033[0m\]\[\033[31m\]$(echo $__COMMAND_LAST_DURATION )ms $(date +%H:%M:%S --date=@$((__COMMAND_START_TIME / 1000)))..$(date +%H:%M:%S) | '
-
 PS1_PART_EXIT_CODE_SUCCESS='true'
 PS1_PART_EXIT_CODE_FAILURE='echo \[\033[33m\]"Exit code: $LAST_EXIT_CODE | "'
 if [ -v PS1_DO_BEEP ]; then
 	PS1_PART_EXIT_CODE_SUCCESS="${PS1_PART_EXIT_CODE_SUCCESS}"'; play -q -n synth 0.08 triangle 5000 vol 0.015 2>/dev/null'
 	PS1_PART_EXIT_CODE_FAILURE="${PS1_PART_EXIT_CODE_FAILURE}"'; play -q -n synth 0.3 sin 60000 vol 0.06 2>/dev/null'
 fi
-PS1_PREFIX["exitCode"]='\[\033[0m\]\[\033[34m\]\[\033[32m\]\[\033[35m\]$(LAST_EXIT_CODE=$? && test $LAST_EXIT_CODE -gt 0 && ('"${PS1_PART_EXIT_CODE_FAILURE}"'; true) || ('"${PS1_PART_EXIT_CODE_SUCCESS}"'; true))'
+add_ps1_prefix exitCode '\[\033[0m\]\[\033[34m\]\[\033[32m\]\[\033[35m\]$(LAST_EXIT_CODE=$? && test $LAST_EXIT_CODE -gt 0 && ('"${PS1_PART_EXIT_CODE_FAILURE}"'; true) || ('"${PS1_PART_EXIT_CODE_SUCCESS}"'; true))'
 
-if [ ! -v PS1_SUFFIX ]; then
-	declare -A PS1_SUFFIX
-fi
+add_ps1_prefix execTime '\[\033[0m\]\[\033[31m\]$(echo $__COMMAND_LAST_DURATION )ms $(date +%H:%M:%S --date=@$((__COMMAND_START_TIME / 1000)))..$(date +%H:%M:%S) | '
+
 export GIT_PS1_SHOWCOLORHINTS=1 GIT_PS1_SHOWDIRTYSTATE=1
-PS1_SUFFIX["git"]='\[\033[36m\]$(__git_ps1)'
+add_ps1_suffix git '\[\033[36m\]$(__git_ps1)'
 
 PS1="${PS1_PART_TITLE}\\n"
 for __next_ps1_part in "${PS1_PREFIX[@]}"; do

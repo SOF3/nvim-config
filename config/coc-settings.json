@@ -4,6 +4,8 @@
 	"go.goplsEnv": {
 		"GOFLAGS": "-tags=integration"
 	},
+	"go.goplsArgs": ["-profile.cpu=/tmp/gopls-cpu.pprof", "-profile.mem=/tmp/gopls-mem.pprof", "-profile.alloc=/tmp/gopls-alloc.pprof"],
+	"go.goplsUseDaemon": false,
 	"rust-analyzer.inlayHints.enable": true,
 	"rust-analyzer.inlayHints.typeHints": true,
 	"rust-analyzer.inlayHints.chainingHints": true,
