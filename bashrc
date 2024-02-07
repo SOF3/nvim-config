@@ -68,18 +68,21 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 function px {
+	__PX_PS1=\ socks5
 	for v in ALL_PROXY HTTPS_PROXY HTTP_PROXY all_proxy https_proxy http_proxy; do
 		eval export $v=socks5://127.0.0.1:55555
 	done
 }
 
 function pxh {
+	__PX_PS1=\ socks5h
 	for v in ALL_PROXY HTTPS_PROXY HTTP_PROXY all_proxy https_proxy http_proxy; do
 		eval export $v=socks5h://127.0.0.1:55555
 	done
 }
 
 function ux {
+	__PX_PS1=
 	for v in ALL_PROXY HTTPS_PROXY HTTP_PROXY all_proxy https_proxy http_proxy; do
 		eval unset $v
 	done
@@ -179,8 +182,10 @@ add_ps1_prefix exitCode '\[\033[0m\]\[\033[34m\]\[\033[32m\]\[\033[35m\]$(LAST_E
 
 add_ps1_prefix execTime '\[\033[0m\]\[\033[31m\]$(echo $__COMMAND_LAST_DURATION )ms $(date +%H:%M:%S --date=@$((__COMMAND_START_TIME / 1000)))..$(date +%H:%M:%S) | '
 
-export GIT_PS1_SHOWCOLORHINTS=1 GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWCOLORHINTS=1 GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWUPSTREAM=auto
 add_ps1_suffix git '\[\033[36m\]$(__git_ps1)'
+
+add_ps1_suffix px '\[\033[33m\]${__PX_PS1}'
 
 PS1="${PS1_PART_TITLE}\\n"
 for __next_ps1_part in "${PS1_PREFIX[@]}"; do
