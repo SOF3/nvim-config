@@ -22,12 +22,7 @@ export HISTCONTROL=ignoredups
 
 
 alias vi='nvim -n'
-if command -v zoxide >/dev/null; then
-	eval "$(zoxide init bash)"
-	alias cd=z
-else
-	alias cd='cd -P'
-fi
+alias cd='cd -P'
 alias ls='ls -F --color=auto --show-control-chars -A'
 alias ll='ls -alF'
 alias la='ls -A'
@@ -206,6 +201,13 @@ if [ ! -v PS1_PROMPT_LINE ]; then
 fi
 
 PS1="${PS1}\\n${PS1_PROMPT_LINE}"
+
+if command -v zoxide >/dev/null; then
+	eval "$(zoxide init bash)"
+	alias cd=z
+else
+	alias cd='cd -P'
+fi
 
 function git-root {
 	git rev-parse --show-toplevel
