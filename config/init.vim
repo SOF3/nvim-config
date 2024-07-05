@@ -84,6 +84,9 @@ let g:AutoPairsShortcutFastWrap = ''
 let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = ''
 
+" Do not recenter on <CR> in {}
+let g:AutoPairsCenterLine = 0
+
 " I hate being unable to type } just because the next line has one
 let g:AutoPairsMultilineClose = 0
 " Do not autopair ''.
@@ -202,7 +205,7 @@ nmap <silent> zf :set modifiable<CR><cmd>Telescope git_files<cr>
 " fuzzy symbol search
 nmap <silent> zs :set modifiable<CR><cmd>Telescope coc workspace_symbols<cr>
 " fuzzy grep search
-nmap <silent> zg :set modifiable<CR><cmd>Telescope grep_string<cr>
+nmap <silent> zg :set modifiable<CR><cmd>Telescope live_grep<cr>
 
 " I almost never use H, M and L anyway.
 " I use vim because behaviour is predictable.
@@ -276,3 +279,8 @@ endfunction
 let g:gitblame_highlight_group = "Ignore"
 let g:gitblame_message_template = '<sha> <date> <author> | <summary>'
 let g:gitblame_date_format = '%r'
+
+let local_vimrc = expand("~/local.vimrc")
+if filereadable(local_vimrc)
+	execute "source " . local_vimrc
+endif
