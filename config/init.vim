@@ -27,44 +27,42 @@ set maxmempattern=10000
 set background=dark
 
 " Plugins
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" System
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin()
 
 " Language
-Plugin 'neoclide/coc.nvim'
-Plugin 'mfussenegger/nvim-dap'
+Plug 'neovim/nvim-lspconfig'
+Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Behaviour
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-abolish'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'preservim/nerdtree'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'tpope/vim-eunuch'
-Plugin 'salsifis/vim-transpose'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
+Plug 'jiangmiao/auto-pairs'
+Plug 'preservim/nerdtree'
+Plug 'haya14busa/incsearch.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'tpope/vim-eunuch'
+Plug 'salsifis/vim-transpose'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
+Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Telescope
-Plugin 'nvim-lua/plenary.nvim'
-Plugin 'nvim-telescope/telescope.nvim'
-Plugin 'nvim-telescope/telescope-fzf-native.nvim'
-Plugin 'fannheyward/telescope-coc.nvim'
-Plugin 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " Cosmetic
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'enricobacis/vim-airline-clock'
-Plugin 'Yggdroot/indentLine'
-Plugin 'f-person/git-blame.nvim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'enricobacis/vim-airline-clock'
+Plug 'Yggdroot/indentLine'
+Plug 'f-person/git-blame.nvim'
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
 
 " Airline setup
@@ -104,8 +102,6 @@ let g:AutoPairs = {
 			\"'''":"'''"
 			\}
 
-lua require('telescope').load_extension('coc')
-
 " Autosave after 0.3s
 set updatetime=300
 autocmd CursorHold,CursorHoldI ?* update
@@ -122,7 +118,7 @@ set ignorecase smartcase
 
 " This is language-specific, but foldlevel=1 is probably the most likely
 " default.
-set fdm=syntax foldlevel=1
+set fdm=expr foldlevel=1 foldexpr=nvim_treesitter#foldexpr()
 
 " This effectively makes Alt-[ equivalent to right arrow.
 nnoremap [ la
@@ -180,47 +176,17 @@ nnoremap g7 7gt
 nnoremap g8 8gt
 nnoremap g9 9gt
 
-" Some common COC bindings.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> g[ <Plug>(coc-diagnostic-prev)
-nmap <silent> g] <Plug>(coc-diagnostic-next)
-nmap <silent> g{ <Plug>(coc-diagnostic-prev-error)
-nmap <silent> g} <Plug>(coc-diagnostic-next-error)
-
-" Who uses `K` and `L` anyway?
-nmap <silent> Kn <Plug>(coc-rename)
-nmap <silent> Kf <Plug>(coc-format-selected)
-nmap <silent> Kx <Plug>(coc-fix-current)
-nmap <silent> Kr <Plug>(coc-refactor)
-
-nmap <silent> Kl <Plug>(coc-codeaction)
-nmap <silent> L <Plug>(coc-codeaction-line)
-vmap <silent> L <Plug>(coc-codeaction-selected)
 
 " zf = fuzzy file search!
-nmap <silent> zf :set modifiable<CR><cmd>Telescope git_files<cr>
-" fuzzy symbol search
-nmap <silent> zs :set modifiable<CR><cmd>Telescope coc workspace_symbols<cr>
+nmap <silent> zf <cmd>Telescope git_files<cr>
 " fuzzy grep search
-nmap <silent> zg :set modifiable<CR><cmd>Telescope live_grep<cr>
-
-" I almost never use H, M and L anyway.
-" I use vim because behaviour is predictable.
-" H, M and L are not predictable, especially when we have `set rnu`.
+nmap <silent> zg <cmd>Telescope live_grep<cr>
 
 " Clear search
 nnoremap H :nohls<CR>
-" Open documentation
-nnoremap M :call CocActionAsync('doHover')<CR>
 
 " I have autosave anyway
 nnoremap ZZ :NERDTreeFind<CR>
-
-" Happy Chinese New Year! ^C^N^Y
-inoremap <silent><expr> <c-c> coc#refresh()
 
 " I want tabs.
 imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
@@ -239,27 +205,15 @@ autocmd BufRead,BufNewFile *.yml set fdm=indent foldlevel=1
 autocmd BufRead,BufNewFile *.php set fdm=indent foldlevel=1
 autocmd BufRead,BufNewFile *.py set foldlevel=0
 
-" Disallow file writing when viewing source of a cloned package
-autocmd BufRead *.go set modifiable
-autocmd BufRead */pkg/mod/*.go set nomodifiable
-autocmd BufRead *.rs set modifiable
-autocmd BufRead */.cargo/registry/src/*.rs set nomodifiable
-
 " I don't do HTML in PHP.
 " Let's disable the matcher so that we have `%` working properly.
 " https://stackoverflow.com/a/24242461/3990767
 autocmd BufWinEnter *.php set mps-=<:>
 
-" Who thought it's a good idea to conceal unused symbols?
-highlight CocFadeout ctermfg=248
-" The default color is almost unreadable to me.
-highlight FgCocErrorFloatBgCocFloating ctermfg=9 ctermbg=10
 " I don't want to think twice to know whether I should `k` or `j`.
 highlight link LineNrAbove Tag
 " Constant color conflicts with Pmenu
 highlight Constant ctermfg=132
-highlight CocMenuSel ctermbg=94
-highlight FgCocHintFloatBgCocFloating ctermbg=91
 
 " Do not reset folds on reload
 augroup remember_folds
@@ -276,9 +230,91 @@ function ReloadWithoutResettingFolds()
 endfunction
 
 " Default git blame color should disambiguate from normal code.
-let g:gitblame_highlight_group = "Ignore"
+let g:gitblame_highlight_group = "Conceal"
 let g:gitblame_message_template = '<sha> <date> <author> | <summary>'
 let g:gitblame_date_format = '%r'
+
+" LSP setup
+:lua <<EOF
+	local cmp = require 'cmp'
+	local lsp = require 'lspconfig'
+	local luasnip = require 'luasnip'
+	local capabilities = require('cmp_nvim_lsp').default_capabilities()
+	local treesitter = require 'nvim-treesitter.configs'
+
+	local on_attach = function(client, bufnr)
+		local function nmap(key, action)
+			vim.keymap.set('n', key, action, {noremap=true, silent=true, buffer = bufnr})
+		end
+
+
+		nmap('gd', function() vim.lsp.buf.definition() end)
+		nmap('gi', function() vim.lsp.buf.implementation() end)
+		nmap('gy', function() vim.lsp.buf.type_definition() end)
+		nmap('gr', function() vim.lsp.buf.references() end)
+
+		local severity = vim.diagnostic.severity
+		nmap('g[', function() vim.diagnostic.goto_prev{ severity = {min = severity.WARN} } end)
+		nmap('g{', function() vim.diagnostic.goto_prev{ severity = severity.ERROR } end)
+		nmap('g}', function() vim.diagnostic.goto_next{ severity = severity.ERROR } end)
+		nmap('g]', function() vim.diagnostic.goto_next{ severity = {min = severity.WARN} } end)
+
+		nmap('L', function() vim.lsp.buf.code_action() end)
+
+		nmap('Kn', function() vim.lsp.buf.rename() end)
+
+	end
+
+	lsp.gopls.setup {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	}
+	lsp.rust_analyzer.setup {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	}
+
+	cmp.setup {
+		snippet = {
+			expand = function(args)
+				luasnip.lsp_expand(args.body)
+			end,
+		},
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+		mapping = cmp.mapping.preset.insert{
+		      ['<C-c>'] = cmp.mapping.complete(),
+		      ['<C-y>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		},
+		sources = {
+			{name = 'nvim_lsp'},
+			{name = 'luasnip'},
+		},
+	}
+
+	treesitter.setup {
+		ensure_installed = {"vim", "go", "rust", "markdown", "lua", "make", "yaml", "vhs", "json", "typescript", "php", "python", "jq", "dockerfile", "editorconfig", "bash", "toml"},
+		auto_install = true,
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = true,
+		},
+		incremental_selection = {
+			enable = true,
+			keymaps = {
+				init_selection = "gsk",
+				node_incremental = "gsn",
+				scope_incremental = "gss",
+				node_decremental = "gsp",
+			},
+		},
+		indent = {
+			enable = true,
+		},
+	}
+EOF
 
 let local_vimrc = expand("~/local.vimrc")
 if filereadable(local_vimrc)
