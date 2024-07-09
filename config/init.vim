@@ -61,6 +61,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'enricobacis/vim-airline-clock'
 Plug 'Yggdroot/indentLine'
 Plug 'f-person/git-blame.nvim'
+Plug 'catppuccin/nvim'
 
 call plug#end()
 filetype plugin indent on
@@ -210,11 +211,6 @@ autocmd BufRead,BufNewFile *.py set foldlevel=0
 " https://stackoverflow.com/a/24242461/3990767
 autocmd BufWinEnter *.php set mps-=<:>
 
-" I don't want to think twice to know whether I should `k` or `j`.
-highlight link LineNrAbove Tag
-" Constant color conflicts with Pmenu
-highlight Constant ctermfg=132
-
 " Do not reset folds on reload
 augroup remember_folds
   autocmd!
@@ -241,6 +237,7 @@ let g:gitblame_date_format = '%r'
 	local luasnip = require 'luasnip'
 	local capabilities = require('cmp_nvim_lsp').default_capabilities()
 	local treesitter = require 'nvim-treesitter.configs'
+	local catppuccin = require 'catppuccin'
 
 	local on_attach = function(client, bufnr)
 		local function nmap(key, action)
@@ -262,7 +259,7 @@ let g:gitblame_date_format = '%r'
 		nmap('L', function() vim.lsp.buf.code_action() end)
 
 		nmap('Kn', function() vim.lsp.buf.rename() end)
-
+		nmap('M', function() vim.lsp.buf.hover() end)
 	end
 
 	lsp.gopls.setup {
@@ -314,6 +311,46 @@ let g:gitblame_date_format = '%r'
 			enable = true,
 		},
 	}
+
+	local initial_colors = {
+		all = {
+			base = '#1e031e',
+		},
+	}
+
+	catppuccin.setup {
+		color_overrides = initial_colors,
+		custom_highlights = function(colors)
+			return {
+				LineNr = { fg = colors.green },
+				LineNrAbove = { fg = colors.flamingo },
+				LineNrBelow = { fg = colors.sky, }
+			}
+		end,
+	}
+	vim.cmd.colorscheme "catppuccin-mocha"
+
+	vim.api.nvim_create_autocmd('FocusGained', {
+		callback = function()
+			catppuccin.setup {
+				color_overrides = initial_colors,
+			}
+			vim.cmd.colorscheme "catppuccin-mocha"
+		end,
+	})
+
+	vim.api.nvim_create_autocmd('FocusLost', {
+		callback = function()
+			catppuccin.setup {
+				color_overrides = {
+					all = {
+						base = '#2e3e2e',
+					},
+				},
+			}
+			vim.cmd.colorscheme "catppuccin-mocha"
+		end,
+	})
 EOF
 
 let local_vimrc = expand("~/local.vimrc")
