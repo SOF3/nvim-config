@@ -36,6 +36,8 @@ catppuccin.setup {
 			LineNrAbove = { fg = colors.flamingo },
 			LineNrBelow = { fg = colors.sky },
 			NormalFloat = { bg = colors.surface1 },
+			ExtraWhitespace = { bg = colors.red },
+			Visual = { bg = colors.overlay0 },
 		}
 	end,
 }

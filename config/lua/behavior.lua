@@ -44,9 +44,12 @@ function map_delim_group(open, close)
 			text[#text] = text[#text] .. close
 		end
 
-		vim.cmd.stopinsert()
-		vim.api.nvim_win_set_cursor(0, {start_row, start_col - 1})
 		vim.api.nvim_buf_set_text(0, start_row - 1, start_col - 1, end_row - 1, end_col, text)
+		vim.api.nvim_win_set_cursor(0, {start_row, start_col - 1})
+
+		if mode == 'V' or mode == 'v' then
+			vim.api.nvim_input('<Esc>')
+		end
 	end)
 end
 
