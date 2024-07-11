@@ -2,8 +2,13 @@ local catppuccin = require 'catppuccin'
 
 vim.g.airline_powerline_fonts = true
 vim.g.airline_theme = 'catppuccin'
+vim.g['airline#extensions#tabline#enabled'] = 1
+vim.g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
+vim.g['airline#extensions#tabline#show_buffers'] = 0
+vim.g['airline#extensions#tabline#show_tabs'] = 0
+vim.g['airline#extensions#tabline#show_tab_nr'] = 1
 vim.g['airline#extensions#clock#format'] = '%H:%M:%S'
-vim.g['airline#extensions#clock#updatetime'] = 100
+vim.g['airline#extensions#clock#updatetime'] = 500
 
 vim.g.gitblame_highlight_group = 'Conceal'
 vim.g.gitblame_message_template = '<sha> <date> <author> | <summary>'
