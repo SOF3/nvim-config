@@ -34,7 +34,8 @@ catppuccin.setup {
 		return {
 			LineNr = { fg = colors.green },
 			LineNrAbove = { fg = colors.flamingo },
-			LineNrBelow = { fg = colors.sky, }
+			LineNrBelow = { fg = colors.sky },
+			NormalFloat = { bg = colors.surface1 },
 		}
 	end,
 }

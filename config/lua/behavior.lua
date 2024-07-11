@@ -64,7 +64,7 @@ vim.keymap.set('i', '<C-w>', '<Esc><C-w>')
 vim.keymap.set('n', 'H', vim.cmd.nohls)
 
 -- I use :qa or just autosave
-vim.keymap.set('n', 'ZZ', vim.cmd.NERDTreeFind)
+vim.keymap.set('n', 'ZZ', telescope.extensions.file_browser.file_browser)
 
 local remember_folds = vim.api.nvim_create_augroup('remember_folds', {})
 vim.api.nvim_create_autocmd({'BufWrite', 'BufWinLeave'}, {
@@ -120,7 +120,11 @@ telescope.setup {
 		fzy_native = {
 			override_file_sorter = true,
 			override_generic_sorter = true,
-		}
+		},
+		file_browser = {
+			hijack_netrw = true,
+		},
 	},
 }
 telescope.load_extension('fzy_native')
+telescope.load_extension('file_browser')
