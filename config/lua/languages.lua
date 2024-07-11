@@ -79,7 +79,7 @@ lsp.gopls.setup {
 lsp.rust_analyzer.setup {
 	on_attach = function(client, bufnr)
 		common_lsp_setup(client, bufnr)
-		vim.opt_local.foldlevel = 1
+		vim.opt_local.foldlevel = 0
 	end,
 	capabilities = cmp_capabilities,
 }
