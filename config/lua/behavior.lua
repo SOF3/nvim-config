@@ -55,7 +55,6 @@ map_delim_group('`', '`')
 map_delim_group('<', '>')
 
 vim.keymap.set('i', '<C-w>', '<Esc><C-w>')
-vim.keymap.set({'n', 'i'}, '<C-t>', '<Esc>:tabedit<Space>')
 
 for tab = 1.,9 do
 	vim.keymap.set('n', 'g' .. tab, function() vim.cmd.tabnext(tab) end)
@@ -82,7 +81,7 @@ vim.api.nvim_create_autocmd({'BufWrite', 'BufWinLeave'}, {
 vim.api.nvim_create_autocmd({'BufReadPost', 'BufWinEnter'}, {
 	pattern = '*.*',
 	group = remember_folds,
-	command = 'loadview',
+	command = 'silent! loadview',
 })
 
 -- Replacement of :e without reloading folds
