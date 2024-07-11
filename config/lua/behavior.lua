@@ -44,6 +44,8 @@ function map_delim_group(open, close)
 			text[#text] = text[#text] .. close
 		end
 
+		vim.cmd.stopinsert()
+		vim.api.nvim_win_set_cursor(0, {start_row, start_col - 1})
 		vim.api.nvim_buf_set_text(0, start_row - 1, start_col - 1, end_row - 1, end_col, text)
 	end)
 end
@@ -110,7 +112,7 @@ vim.keymap.set('n', 'zb', telescope_builtin.buffers)
 vim.keymap.set('n', 'zf', telescope_builtin.git_files)
 vim.keymap.set('n', 'zF', telescope_builtin.find_files)
 vim.keymap.set('n', 'zg', telescope_builtin.live_grep)
-vim.keymap.set('n', 'zs', telescope_builtin.lsp_workspace_symbols)
+vim.keymap.set('n', 'zs', telescope_builtin.lsp_dynamic_workspace_symbols)
 vim.keymap.set('n', 'zd', telescope_builtin.diagnostics)
 
 telescope.setup {
