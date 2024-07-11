@@ -26,6 +26,8 @@ set maxmempattern=10000
 
 set background=dark
 
+set switchbuf+=usetab,newtab
+
 " Plugins
 call plug#begin()
 
@@ -230,7 +232,6 @@ let g:gitblame_highlight_group = "Conceal"
 let g:gitblame_message_template = '<sha> <date> <author> | <summary>'
 let g:gitblame_date_format = '%r'
 
-" LSP setup
 :lua <<EOF
 	local cmp = require 'cmp'
 	local lsp = require 'lspconfig'
@@ -244,10 +245,20 @@ let g:gitblame_date_format = '%r'
 			vim.keymap.set('n', key, action, {noremap=true, silent=true, buffer = bufnr})
 		end
 
+		local function on_list(options)
+			vim.fn.setqflist({}, 'r', options)
+			if #options.items == 1 then
+				vim.cmd.cclose()
+				vim.cmd.cfirst()
+			else
+				vim.cmd.copen()
+			end
+		end
+		local single_list_opts = {on_list = on_list}
 
-		nmap('gd', function() vim.lsp.buf.definition() end)
+		nmap('gd', function() vim.lsp.buf.definition(single_list_opts) end)
 		nmap('gi', function() vim.lsp.buf.implementation() end)
-		nmap('gy', function() vim.lsp.buf.type_definition() end)
+		nmap('gy', function() vim.lsp.buf.type_definition(single_list_opts) end)
 		nmap('gr', function() vim.lsp.buf.references() end)
 
 		local severity = vim.diagnostic.severity
@@ -260,6 +271,15 @@ let g:gitblame_date_format = '%r'
 
 		nmap('Kn', function() vim.lsp.buf.rename() end)
 		nmap('M', function() vim.lsp.buf.hover() end)
+
+		vim.api.nvim_create_autocmd('CursorHold', {
+			buffer = bufnr,
+			callback = function() vim.lsp.buf.document_highlight() end,
+		})
+		vim.api.nvim_create_autocmd({'CursorMoved', 'ModeChanged'}, {
+			buffer = bufnr,
+			callback = function() vim.lsp.buf.clear_references() end,
+		})
 	end
 
 	lsp.gopls.setup {
@@ -313,8 +333,8 @@ let g:gitblame_date_format = '%r'
 	}
 
 	local initial_colors = {
-		all = {
-			base = '#1e031e',
+		mocha = {
+			base = '#1e1e22',
 		},
 	}
 
@@ -343,7 +363,7 @@ let g:gitblame_date_format = '%r'
 		callback = function()
 			catppuccin.setup {
 				color_overrides = {
-					all = {
+					mocha = {
 						base = '#2e3e2e',
 					},
 				},
