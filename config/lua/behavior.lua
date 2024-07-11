@@ -1,4 +1,5 @@
 local cmp = require 'cmp'
+local luasnip = require 'luasnip'
 local telescope = require('telescope.builtin')
 
 -- Autosave after 0.3s
