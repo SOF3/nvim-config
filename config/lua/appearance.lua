@@ -4,11 +4,19 @@ vim.g.airline_powerline_fonts = true
 vim.g.airline_theme = 'catppuccin'
 vim.g['airline#extensions#tabline#enabled'] = 1
 vim.g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
-vim.g['airline#extensions#tabline#show_buffers'] = 0
-vim.g['airline#extensions#tabline#show_tabs'] = 0
-vim.g['airline#extensions#tabline#show_tab_nr'] = 1
 vim.g['airline#extensions#clock#format'] = '%H:%M:%S'
 vim.g['airline#extensions#clock#updatetime'] = 500
+vim.g['airline#extensions#tabline#overflow_marker'] = '…'
+vim.g['airline#extensions#tabline#buffer_idx_mode'] = 2
+
+vim.keymap.set('n', 'g-', '<Plug>AirlineSelectPrevTab', {})
+vim.keymap.set('n', 'g+', '<Plug>AirlineSelectNextTab', {})
+for j = 0,9 do
+	vim.keymap.set('n', 'g' .. j, '<Plug>AirlineSelectTab1' .. j, {})
+	for i = 1,9 do
+		vim.keymap.set('n', 'z' .. i .. j, '<Plug>AirlineSelectTab' .. i .. j, {})
+	end
+end
 
 vim.g.gitblame_highlight_group = 'Conceal'
 vim.g.gitblame_message_template = '<sha> <date> <author> | <summary>'

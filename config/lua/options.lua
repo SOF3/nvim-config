@@ -14,9 +14,6 @@ vim.opt.autoread = true
 vim.opt.autowrite = true
 vim.opt.maxmempattern = 10000
 
--- quickfix opens new tabs
-vim.opt.switchbuf = {'uselast', 'usetab', 'newtab'}
-
 -- {number}j/{number}k
 vim.opt.number = true
 vim.opt.relativenumber = true

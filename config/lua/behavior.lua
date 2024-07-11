@@ -1,6 +1,7 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-local telescope = require('telescope.builtin')
+local telescope = require('telescope')
+local telescope_builtin = require('telescope.builtin')
 
 -- Autosave after 0.3s
 vim.opt.updatetime = 300
@@ -57,16 +58,6 @@ map_delim_group('<', '>')
 
 vim.keymap.set('i', '<C-w>', '<Esc><C-w>')
 
-for tab = 1.,9 do
-	vim.keymap.set('n', 'g' .. tab, function() vim.cmd.tabnext(tab) end)
-end
-
-vim.keymap.set('n', 'zf', telescope.git_files)
-vim.keymap.set('n', 'zF', telescope.find_files)
-vim.keymap.set('n', 'zg', telescope.live_grep)
-vim.keymap.set('n', 'zs', telescope.lsp_workspace_symbols)
-vim.keymap.set('n', 'zd', telescope.diagnostics)
-
 -- Clear auto highlight
 vim.keymap.set('n', 'H', vim.cmd.nohls)
 
@@ -114,3 +105,20 @@ cmp.setup {
 }
 
 cmp.event:on('confirm_done', require 'nvim-autopairs.completion.cmp'.on_confirm_done())
+
+vim.keymap.set('n', 'zb', telescope_builtin.buffers)
+vim.keymap.set('n', 'zf', telescope_builtin.git_files)
+vim.keymap.set('n', 'zF', telescope_builtin.find_files)
+vim.keymap.set('n', 'zg', telescope_builtin.live_grep)
+vim.keymap.set('n', 'zs', telescope_builtin.lsp_workspace_symbols)
+vim.keymap.set('n', 'zd', telescope_builtin.diagnostics)
+
+telescope.setup {
+	extensions = {
+		fzy_native = {
+			override_file_sorter = true,
+			override_generic_sorter = true,
+		}
+	},
+}
+telescope.load_extension('fzy_native')
