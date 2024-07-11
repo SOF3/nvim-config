@@ -38,6 +38,7 @@ catppuccin.setup {
 			NormalFloat = { bg = colors.surface1 },
 			ExtraWhitespace = { bg = colors.red },
 			Visual = { bg = colors.overlay0 },
+			Search = { bg = colors.overlay2 },
 		}
 	end,
 }
