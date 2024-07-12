@@ -1,5 +1,7 @@
 require 'options'
 require 'plugins'
 require 'appearance'
+require 'keymap'
+require 'telescope_setup'
 require 'behavior'
 require 'languages'
