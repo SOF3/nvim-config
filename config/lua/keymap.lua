@@ -53,7 +53,7 @@ vim.keymap.set('i', '<C-w>', '<Esc><C-w>')
 vim.keymap.set('n', 'H', vim.cmd.nohls)
 
 -- quickfix keymap
-vim.api.nvim_create_autocmd({'BufEnter'}, {
+vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
 	callback = function()
 		if vim.bo.buftype == 'quickfix' then
 			vim.keymap.set('n', 'q', vim.cmd.quit, {buffer = 0})
