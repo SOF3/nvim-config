@@ -19,7 +19,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-eunuch'
 Plug 'salsifis/vim-transpose'
 Plug 'hrsh7th/nvim-cmp'
-Plug('L3MON4D3/LuaSnip', {['tag'] = 'v2.*', ['do'] = 'make install_jsregexp'})
+Plug('L3MON4D3/LuaSnip', {['do'] = 'make install_jsregexp'})
 Plug 'hrsh7th/cmp-nvim-lsp'
 
 -- Telescope

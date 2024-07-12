@@ -51,7 +51,15 @@ local function common_lsp_setup(client, bufnr)
 	vim.keymap.set('n', 'g{', function() vim.diagnostic.goto_prev { severity = { min = severity.ERROR } } end, {buffer = bufnr})
 	vim.keymap.set('n', 'g}', function() vim.diagnostic.goto_next { severity = { min = severity.ERROR } } end, {buffer = bufnr})
 
-	vim.keymap.set('n', 'L', function() vim.lsp.buf.code_action() end, {buffer = bufnr})
+	vim.keymap.set('n', 'L', function()
+		local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
+		vim.lsp.buf.code_action( {
+			range = {
+				start = {row, 0},
+				['end'] = {row+1, 0},
+			},
+		})
+	end, {buffer = bufnr})
 	vim.keymap.set('n', 'Kn', function() vim.lsp.buf.rename() end, {buffer = bufnr})
 	vim.keymap.set('n', 'M', function() vim.lsp.buf.hover() end, {buffer = bufnr})
 

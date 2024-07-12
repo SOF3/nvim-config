@@ -14,6 +14,7 @@ vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI', 'BufEnter', 'FocusGain
 
 local remember_folds = vim.api.nvim_create_augroup('remember_folds', {})
 vim.api.nvim_create_autocmd({'BufWrite', 'BufWinLeave'}, {
+	pattern = {"?*"},
 	group = remember_folds,
 	callback = function()
 		if vim.bo.buftype == "" then
@@ -22,7 +23,7 @@ vim.api.nvim_create_autocmd({'BufWrite', 'BufWinLeave'}, {
 	end,
 })
 vim.api.nvim_create_autocmd({'BufReadPost', 'BufWinEnter'}, {
-	pattern = '*.*',
+	pattern = {"?*"},
 	group = remember_folds,
 	callback = function()
 		if vim.bo.buftype == "" then
