@@ -1,7 +1,7 @@
 --- Personal keymaps.
 
 -- Change %% to current dir
-vim.cmd.cabbr {args = {'<args>', '%%', "expand('%:p:h')"}}
+vim.cmd.cabbr {args = {'<expr>', '%%', "expand('%:h')"}}
 
 -- Jump-to column is more common than jump-to-line
 vim.keymap.set('n', '\'', '`')
