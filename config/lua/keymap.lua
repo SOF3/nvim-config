@@ -60,5 +60,8 @@ vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
 			vim.keymap.set('n', '<Cr>', '<Cr><Cmd>:cclose<Cr>', {buffer = 0})
 			vim.keymap.set('t', '<Cr>', '<Cr><Cmd>:cclose<Cr>', {buffer = 0})
 		end
+		if vim.bo.buftype == 'quickfix' or vim.bo.buftype == 'nofile' then
+			vim.keymap.set('n', '<Esc>', vim.cmd.quit, {buffer = 0})
+		end
 	end
 })
