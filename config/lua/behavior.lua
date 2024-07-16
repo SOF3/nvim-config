@@ -3,13 +3,13 @@ local luasnip = require 'luasnip'
 
 -- Autosave after 0.3s
 vim.opt.updatetime = 300
-vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
-	pattern = {"*.*"},
-	callback = function(ev) vim.cmd.update() end,
-})
 vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI', 'BufEnter', 'FocusGained'}, {
-	pattern = {"*.*"},
-	callback = function(ev) vim.cmd.update() end,
+	pattern = {"?*"},
+	callback = function(ev)
+		if vim.bo.buftype == "" then
+			vim.cmd.update()
+		end
+	end,
 })
 
 local remember_folds = vim.api.nvim_create_augroup('remember_folds', {})
