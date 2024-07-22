@@ -11,8 +11,8 @@ vim.keymap.set('n', 'ZZ', function()
 end)
 
 vim.keymap.set('n', 'zb', telescope_builtin.buffers)
-vim.keymap.set('n', 'zf', telescope_builtin.git_files)
-vim.keymap.set('n', 'zF', telescope_builtin.find_files)
+vim.keymap.set('n', 'zF', telescope_builtin.git_files)
+vim.keymap.set('n', 'zf', telescope_builtin.find_files)
 vim.keymap.set('n', 'zg', telescope_builtin.live_grep)
 vim.keymap.set('n', 'zG', function()
 	telescope_builtin.live_grep {
