@@ -25,6 +25,7 @@ vim.g.gitblame_date_format = '%r'
 local initial_colors = {
 	mocha = {
 		base = '#1e1e22',
+		overlay1 = '#3f645c',
 	},
 }
 
