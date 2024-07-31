@@ -43,7 +43,7 @@ local function common_lsp_setup(client, bufnr)
 	vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition(single_list_ops) end, {buffer = bufnr})
 	vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation(single_list_ops) end, {buffer = bufnr})
 	vim.keymap.set('n', 'gy', function() vim.lsp.buf.type_definition(single_list_ops) end, {buffer = bufnr})
-	vim.keymap.set('n', 'gr', function() vim.lsp.buf.references(single_list_ops) end, {buffer = bufnr})
+	-- vim.keymap.set('n', 'gr', function() vim.lsp.buf.references(single_list_ops) end, {buffer = bufnr})
 
 	local severity = vim.diagnostic.severity
 	vim.keymap.set('n', 'g[', function() vim.diagnostic.goto_prev { severity = { min = severity.WARN } } end, {buffer = bufnr})
