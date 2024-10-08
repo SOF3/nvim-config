@@ -22,6 +22,8 @@ vim.g.gitblame_highlight_group = 'Conceal'
 vim.g.gitblame_message_template = '<sha> <date> <author> | <summary>'
 vim.g.gitblame_date_format = '%r'
 
+vim.g.indentLine_fileTypeExclude = {'markdown'}
+
 local initial_colors = {
 	mocha = {
 		base = '#1e1e22',
