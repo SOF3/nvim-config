@@ -26,4 +26,4 @@ vim.opt.smartcase = true
 vim.opt.completeopt = {'menuone', 'noselect'}
 
 -- Expand fold
-vim.opt.foldopen = {'all'}
+vim.opt.foldopen = {'block', 'hor', 'insert', 'mark', 'percent', 'quickfix', 'search', 'undo'}
