@@ -33,7 +33,7 @@ alias ta='tmux a -t'
 alias clear='env clear && env clear'
 alias grep='grep --color=auto'
 
-alias carf='cargo fmt'
+alias carf='cargo +nightly fmt'
 alias carl='cargo clippy'
 alias carb='cargo build'
 alias carr='cargo run'
@@ -243,6 +243,10 @@ function retry {
 		fi
 		sleep 1
 	done
+}
+
+function path {
+	PATH="$1":$PATH bash -c 'exec "$@"' "$@"
 }
 
 echo "complete bashrc ($((($(date +%s%N) - __BASHRC_START) / 1000000))ms)" >&2
