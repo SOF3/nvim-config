@@ -35,6 +35,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'enricobacis/vim-airline-clock'
 Plug 'Yggdroot/indentLine'
 Plug 'f-person/git-blame.nvim'
-Plug 'catppuccin/nvim'
+Plug('catppuccin/nvim', {['as'] = 'catppuccin'})
+
+Plug 'github/copilot.vim'
 
 vim.call('plug#end')

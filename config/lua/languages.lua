@@ -1,18 +1,22 @@
 -- Setup for languages of concern
 
 local cmp = require 'cmp'
-local lsp = require 'lspconfig'
-local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
 
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
-require 'nvim-treesitter.configs'.setup {
-	ensure_installed = {"vim", "go", "rust", "markdown", "lua", "make", "yaml", "vhs", "json", "typescript", "php", "python", "jq", "dockerfile", "editorconfig", "bash", "toml"},
+require 'nvim-treesitter'.setup {
+	ensure_installed = {"vim", "go", "rust", "markdown", "make", "yaml", "vhs", "json", "typescript", "php", "python", "jq", "dockerfile", "editorconfig", "bash", "toml"},
 	auto_install = true,
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = true,
+		disable = {'lua'},
 	},
 	incremental_selection = {
 		enable = true,
@@ -60,10 +64,12 @@ local function common_lsp_setup(client, bufnr)
 			},
 		})
 	end, {buffer = bufnr})
-	vim.keymap.set('n', 'Kn', function() vim.lsp.buf.rename() end, {buffer = bufnr})
-	vim.keymap.set('n', 'M', function() vim.lsp.buf.hover() end, {buffer = bufnr})
+	vim.keymap.set('n', 'Mn', function() vim.lsp.buf.rename() end, {buffer = bufnr})
+	vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, {buffer = bufnr})
 
-	if client.supports_method('textDocument/documentHighlight') then
+	local win = vim.api.nvim_get_current_win()
+
+	if client:supports_method('textDocument/documentHighlight') then
 		vim.api.nvim_create_autocmd('CursorHold', {
 			buffer = bufnr,
 			callback = function() vim.lsp.buf.document_highlight() end,
@@ -73,17 +79,23 @@ local function common_lsp_setup(client, bufnr)
 			callback = function() vim.lsp.buf.clear_references() end,
 		})
 	end
+
+	if client:supports_method('textDocument/foldingRange') then
+		vim.wo[win].foldmethod = 'expr'
+		vim.wo[win].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+	end
 end
 
-lsp.gopls.setup {
+vim.lsp.config('gopls', {
 	on_attach = function(client, bufnr)
 		common_lsp_setup(client, bufnr)
 		vim.opt_local.foldlevel = 0
 	end,
-	capabilities = cmp_capabilities,
-}
+	capabilities = capabilities,
+})
 
-lsp.rust_analyzer.setup {
+vim.lsp.enable('rust_analyzer')
+vim.lsp.config('rust_analyzer', {
 	on_attach = function(client, bufnr)
 		common_lsp_setup(client, bufnr)
 		vim.opt_local.foldlevel = 0
@@ -98,7 +110,7 @@ lsp.rust_analyzer.setup {
 			end
 		end
 	end,
-	capabilities = cmp_capabilities,
+	capabilities = capabilities,
 	settings = {
 		['rust-analyzer'] = {
 			cargo = {
@@ -106,11 +118,11 @@ lsp.rust_analyzer.setup {
 			},
 		},
 	}
-}
+})
 
-lsp.pylsp.setup {
+vim.lsp.config('pylsp', {
 	on_attach = function(client, bufnr)
 		common_lsp_setup(client, bufnr)
 	end,
 	capabilities = cmp_capabilities,
-}
+})

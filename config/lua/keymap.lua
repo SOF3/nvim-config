@@ -63,5 +63,12 @@ vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
 		if vim.bo.buftype == 'quickfix' or vim.bo.buftype == 'nofile' then
 			vim.keymap.set('n', '<Esc>', vim.cmd.quit, {buffer = 0})
 		end
+
+		vim.g.copilot_no_tab_map = true
+		vim.wo.conceallevel = 0
 	end
 })
+
+-- copilot
+vim.keymap.set('i', '<C-J>', '<Plug>(copilot-accept-line)')
+vim.keymap.set('i', '<C-K>', 'copilot#Accept("\\<CR>")', {expr = true, silent = true, replace_keycodes=false})

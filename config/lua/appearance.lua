@@ -1,7 +1,8 @@
 local catppuccin = require 'catppuccin'
 
 vim.g.airline_powerline_fonts = true
-vim.g.airline_theme = 'catppuccin'
+-- vim.g.airline_theme = 'catppuccin' -- not working for some reason
+vim.g.airline_theme = 'deus'
 vim.g['airline#extensions#tabline#enabled'] = 1
 vim.g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
 vim.g['airline#extensions#clock#format'] = '%H:%M:%S'

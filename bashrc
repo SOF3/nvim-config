@@ -34,6 +34,7 @@ alias clear='env clear && env clear'
 alias grep='grep --color=auto'
 
 alias carf='cargo +nightly fmt'
+alias carff='git ls-files --cached --others --exclude-standard | grep "\\.rs\$" | xargs rustfmt +nightly --config-path $(git rev-parse --show-toplevel) --edition 2024 --style-edition 2024'
 alias carl='cargo clippy'
 alias carb='cargo build'
 alias carr='cargo run'

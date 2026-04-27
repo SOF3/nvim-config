@@ -61,3 +61,18 @@ cmp.setup {
 }
 
 cmp.event:on('confirm_done', require 'nvim-autopairs.completion.cmp'.on_confirm_done())
+
+-- no airline in floating windows
+vim.api.nvim_create_autocmd("WinNew", {
+  pattern = "*",
+  callback = function()
+    -- Safely get the ID of the window being created
+    local win_id = vim.api.nvim_get_current_win()
+    local win_config = vim.api.nvim_win_get_config(win_id)
+
+    -- Floating windows have a 'relative' property that isn't empty
+    if win_config.relative ~= "" then
+      vim.w[win_id].airline_disable_statusline = 1
+    end
+  end,
+})
