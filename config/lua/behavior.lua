@@ -64,15 +64,26 @@ cmp.event:on('confirm_done', require 'nvim-autopairs.completion.cmp'.on_confirm_
 
 -- no airline in floating windows
 vim.api.nvim_create_autocmd("WinNew", {
-  pattern = "*",
-  callback = function()
-    -- Safely get the ID of the window being created
-    local win_id = vim.api.nvim_get_current_win()
-    local win_config = vim.api.nvim_win_get_config(win_id)
+	pattern = "*",
+	callback = function()
+		-- Safely get the ID of the window being created
+		local win_id = vim.api.nvim_get_current_win()
+		local win_config = vim.api.nvim_win_get_config(win_id)
 
-    -- Floating windows have a 'relative' property that isn't empty
-    if win_config.relative ~= "" then
-      vim.w[win_id].airline_disable_statusline = 1
-    end
-  end,
+		-- Floating windows have a 'relative' property that isn't empty
+		if win_config.relative ~= "" then
+			vim.w[win_id].airline_disable_statusline = 1
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function()
+		-- Never change behavior of word boundaries. This just breaks muscle memory.
+		vim.opt_local.iskeyword:remove("-")
+
+		-- Conceals are confusing.
+		vim.opt_local.conceallevel = 0
+	end,
 })
