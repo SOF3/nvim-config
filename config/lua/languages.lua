@@ -86,6 +86,7 @@ local function common_lsp_setup(client, bufnr)
 	end
 end
 
+vim.lsp.enable('gopls')
 vim.lsp.config('gopls', {
 	on_attach = function(client, bufnr)
 		common_lsp_setup(client, bufnr)
@@ -120,9 +121,18 @@ vim.lsp.config('rust_analyzer', {
 	}
 })
 
-vim.lsp.config('pylsp', {
+vim.lsp.enable('pyright')
+vim.lsp.config('pyright', {
 	on_attach = function(client, bufnr)
 		common_lsp_setup(client, bufnr)
 	end,
 	capabilities = cmp_capabilities,
+})
+
+vim.lsp.enable('metals')
+vim.lsp.config('metals', {
+	on_attach = function(client, bufnr)
+		common_lsp_setup(client, bufnr)
+	end,
+	capabilitiesk= cmp_capabilities,
 })
