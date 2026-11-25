@@ -6,7 +6,7 @@ vim.opt.updatetime = 300
 vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI', 'BufEnter', 'FocusGained'}, {
 	pattern = {"?*"},
 	callback = function(ev)
-		if vim.bo.buftype == "" then
+		if vim.bo.buftype == "" and vim.bo.modified then
 			vim.cmd.update()
 		end
 	end,
