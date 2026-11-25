@@ -40,6 +40,8 @@ alias carb='cargo build'
 alias carr='cargo run'
 alias cart='cargo test'
 
+alias clip='xclip -selection clipboard'
+
 alias myps='ps -A --forest -o user,pid,ppid,stime,tty,time,%cpu,%mem,rss,start,time,comm'
 function p {
 	if [[ $# -eq 0 ]]; then

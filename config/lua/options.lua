@@ -6,6 +6,7 @@ vim.opt.showmode = false -- already covered by airline
 vim.opt.clipboard = {} -- maintain separate clipboards
 vim.opt.mouse = {} -- easier to copy from terminal directly; otherwise moving via keys is easier
 vim.opt.wildmode = {'list:longest', 'longest:full'}
+vim.opt.title = true
 
 vim.opt.hidden = true
 vim.opt.startofline = true -- idk why nvim turns this off by default...
